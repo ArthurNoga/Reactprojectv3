@@ -12,7 +12,6 @@ export const clientSlice = createSlice(
         initialState,
         reducers: {
             setClients: (state, action) => {
-                localStorage.setItem("clients", JSON.stringify(action.payload))
                 state.clients = action.payload
             },
         },

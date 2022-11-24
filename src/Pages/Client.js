@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import {useEffect, useState} from "react";
 import {toObjectList} from "../helpers/transformations";
+import {Clientform} from "../Components/ClientsTab/Clientform";
 
 
 const mapStateToProps = (state) => {
@@ -19,14 +20,16 @@ const Client = (props) => {
     }, [props.clients])
 
     return (<div>
-        <Grid container spacing={0}>
+        <Grid container spacing={4}>
             <Grid item xs={12}>
+                <Paper sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
+                    <Clientform/>
+                </Paper>
+            </Grid>
+            <Grid item xs={12} spacing={4}>
                 <Paper sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
                     <ClientTab rows={clients}/>
                 </Paper>
-            </Grid>
-            <Grid item xs={4}>
-
             </Grid>
             <Grid item xs={4}>
 

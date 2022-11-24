@@ -53,13 +53,17 @@ export const logout = createAsyncThunk("auth/logout", async () => {
 
 });
 
-const initialState = user
-    ? {isLoggedIn: true, user}
-    : {isLoggedIn: false, user: null};
+const initialState =  {isLoggedIn: false, user: null};
 
 export const authSlice = createSlice({
     name: "auth",
     initialState,
+    reducers:{
+        clearState:(state)=>{
+            state.isLoggedIn=false
+            state.user=null
+        }
+    },
     extraReducers: {
         [register.fulfilled]: (state, action) => {
             state.isLoggedIn = false;
@@ -88,5 +92,5 @@ export const authSlice = createSlice({
     },
 });
 
-
+export const{clearState}=authSlice.actions
 export const authSelector = state => state.auth

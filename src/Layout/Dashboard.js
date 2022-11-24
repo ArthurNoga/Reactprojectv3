@@ -11,13 +11,10 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import {mainListItems, secondaryListItems} from './listItems';
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import MoreTimeIcon from "@mui/icons-material/ShoppingCart";
@@ -25,21 +22,12 @@ import ListItemText from "@mui/material/ListItemText";
 
 
 import {useDispatch} from "react-redux";
-import {logout} from "../features/User/AuthSlice";
-import {Outlet} from "react-router-dom";
+import {clearState} from "../features/User/AuthSlice";
+import {Outlet, useNavigate} from "react-router-dom";
+import PeopleIcon from "@mui/icons-material/People";
+import CodeIcon from "@mui/icons-material/Dashboard";
+import {ListItem} from "@mui/material";
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 const drawerWidth = 240;
 
@@ -90,11 +78,32 @@ const Drawer = styled(MuiDrawer, {shouldForwardProp: (prop) => prop !== 'open'})
 const mdTheme = createTheme();
 
 function DashboardContent() {
+    const navigate = useNavigate();
+
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
     };
     const dispatch = useDispatch()
+
+
+    const itemsList = [
+        {
+            text: 'Clients',
+            icon: <PeopleIcon/>,
+            onClick: () => navigate('/Clients'),
+        },
+        {
+            text: 'Project',
+            icon: <CodeIcon/>,
+            onClick: () => navigate('/Projects'),
+        },
+        {
+            text: 'Invoices',
+            icon: <MoreTimeIcon/>,
+            onClick: () => navigate('/Invoices'),
+        },
+    ];
     return (
         <ThemeProvider theme={mdTheme}>
             <Box sx={{display: 'flex'}}>
@@ -148,9 +157,22 @@ function DashboardContent() {
                     </Toolbar>
                     <Divider/>
                     <List component="nav">
-                        {mainListItems}
+
+                        {itemsList.map((item, index) => {
+                            const {text, icon, onClick} = item;
+                            return (
+
+                                <ListItemButton key={index} component={Link} onClick={item.onClick}>
+                                    <ListItemIcon>
+                                        {item.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.text}/>
+                                </ListItemButton>
+                            );
+                        })}
+
                         <Divider sx={{my: 1}}/>
-                        <ListItemButton component={Link} to="/" onClick={dispatch(logout)}>
+                        <ListItemButton component={Link} to="/" onClick={dispatch(clearState)}>
                             <ListItemIcon>
                                 <MoreTimeIcon/>
                             </ListItemIcon>

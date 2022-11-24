@@ -16,15 +16,18 @@ const mapStateToProps = (state) => {
 
 const App = (props) => {
 
+    const [isAuth,setIsAuth]=useState(false)
 
-    const [trigger, setTrigger] = useState(1)
+    useEffect(()=>{
 
+
+    },[props.user])
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={props.user ? <Dashboard/> : <SignIn trigger={setTrigger} count={trigger}/>}>
-                   {/*Routing dans le Dashboard*/}
+                <Route path="/" element={props.user ? <Dashboard/> : <SignIn />}>
+
                     <Route path="/" element={<Client/>}/>
                     <Route path="Clients" element={<Client/>}/>
                     <Route path="Projects" element={<Projects/>}/>

@@ -11,9 +11,8 @@ export const fetchProjectsByUserId = createAsyncThunk(
     async (userid, thunkAPI) => {
         try {
             const response = await projectService.fetchProjectsByUserId(userid);
-            localStorage.setItem("projects",JSON.stringify(response.array))
             thunkAPI.dispatch(setClients(response.client))
-            return response.array;
+            return response.data.data;
         } catch (error) {
             const message =
                 (error.response &&

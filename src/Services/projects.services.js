@@ -10,23 +10,12 @@ const fetchProjectsByUserId = (userid) => {
     return axios
         .get(API_URL + "projects/",)
         .then((response) => {
-
-            const datas = response.data
-            const array = []
+            const data = response.data
             const client = []
-            datas.data.map(u => {
-
-                if (u.attributes.dev.id == userid) {
-                    array.push(u)
-                }
-                if (u.attributes.dev.id == userid) {
+            data.data.map(u => {
                     client.push(u.attributes.client)
-                }
-
             })
-
-            return {array, client}
-
+            return {data, client}
         });
 };
 

@@ -32,17 +32,20 @@ const login = (username, password) => {
 
             const datas = response.data
 
-            let data={}
-            datas.data.map(u=> {
-            if(u.attributes.username===username){
-                data=u
-            }
+            let data = {}
+
+            datas.data.map(u => {
+                if (u.attributes.username === username && u.attributes.password === password ) {
+                    data = u
+                }
             })
-            return data
+            const err = new Error("not found")
+
+            return data.attributes.username == username && data.attributes.password == password ? data : err
+
 
         })
 };
-
 
 
 const logout = () => {

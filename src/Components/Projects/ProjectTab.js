@@ -1,11 +1,11 @@
 import GridGenric from "../GridGenric";
 import Button from "@mui/material/Button";
 import {GridColDef} from "@mui/x-data-grid";
-import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal} from "@mui/material";
+
 import {useEffect, useState} from "react";
 import ClientServices from "../../Services/client.services";
 import {useDispatch} from "react-redux";
-import {setClientInUse} from "../../features/Client/ClientSlice";
+
 
 const ProjectTab = (props) => {
     const dispatch = useDispatch()
@@ -15,7 +15,7 @@ const ProjectTab = (props) => {
 
     useEffect(() => {
         console.log(id)
-       if(id!=0){dispatch(setClientInUse(id))}
+
     }, [open])
     const handleClickOpen = (id) => {
         setOpen(true);

@@ -15,28 +15,23 @@ export const toObjectList = (items, type) => {
                     url: items[x].url
 
                 }
+                data.push(obj)
             }
-            data.push(obj)
+
             break;
         case "PROJECT":
-            obj = {
-                id:"",
-                name: "",
-                description: "",
-                technology: "",
-                clientId: "",
-                invoiceId: ""
+            for (const x in items) {
+
+                obj = {
+                    id: items[x].id,
+                    name: items[x].attributes.name,
+                    description: items[x].attributes.description,
+                    technology: items[x].attributes.technology,
+                    clientId: items[x].attributes.client.id
+                }
+                data.push(obj)
             }
-            items.projects.map(x => {
-                obj.id=x.id
-                obj.name=x.attributes.name
-                obj.description=x.attributes.description
-                obj.technology=x.attributes.technology
-                obj.clientId=x.attributes.client.id
-                obj.invoiceId="x.relationships.invoice.data.id"
-            })
-            console.log(obj)
-            data.push(obj)
+
             break;
     }
     return data

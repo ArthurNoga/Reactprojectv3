@@ -1,12 +1,12 @@
 import {connect} from "react-redux";
-import ClientTab from "../Components/ClientsTab/ClientTab";
+import ClientTab from "../Components/Clients/ClientTab";
 import Grid from "@mui/material/Grid";
 import {Pages} from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import {useEffect, useState} from "react";
 import {toObjectList} from "../helpers/transformations";
-import {Clientform} from "../Components/ClientsTab/Clientform";
+import {Clientform} from "../Components/Clients/Clientform";
 import Container from "@mui/material/Container";
 
 
@@ -24,7 +24,7 @@ const Client = (props) => {
             <Grid container spacing={4}>
                 <Grid item xs={12}>
                     <Paper sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
-
+                         <ClientTab rows={clients}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={12} spacing={4}>

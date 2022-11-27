@@ -10,6 +10,7 @@ export const addClient = createAsyncThunk("client/AddClient",
     async ({firstname, lastname, mail, tel}, thunkAPI) => {
         try {
             const response = await ClientServices.addClient(firstname, lastname, mail, tel);
+            console.log(response.data)
             return response.data;
         } catch (error) {
             const message =

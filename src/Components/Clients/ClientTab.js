@@ -7,9 +7,9 @@ import {useEffect, useState} from "react";
 
 const ClientTab = (props) => {
 
-    return (<div>
+    return (
         <GridGenric rows={props.rows} columns={clientColumns}/>
-    </div>)
+    )
 }
 
 export default ClientTab;

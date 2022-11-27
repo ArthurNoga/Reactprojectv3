@@ -4,6 +4,7 @@ import Container from "@mui/material/Container";
 export default function GridGenric(props) {
     return (
         <Container style={{height: 300, width: '100%'}}>
+
             <DataGrid components={{Toolbar: GridToolbar}}
                       getRowId={(row) => row.id}
                       rows={props.rows}

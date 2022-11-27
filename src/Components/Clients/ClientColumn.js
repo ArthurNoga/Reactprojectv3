@@ -26,13 +26,7 @@ export const clientColumns: GridColDef[] = [
             <a href={`${params.value}`}>{params.value}</a>
         )
     },
-    {
-        field: 'tel',
-        headerName: 'Tel',
-        type: 'Tel',
-        width: 160,
-        editable: false,
-    },
+
     {
         field: 'urls',
         headerName: 'Projects',

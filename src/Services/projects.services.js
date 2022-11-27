@@ -15,6 +15,7 @@ const fetchProjectsByUserId = (userid) => {
             data.data.map(u => {
                     client.push(u.attributes.client)
             })
+
             return {data, client}
         });
 };

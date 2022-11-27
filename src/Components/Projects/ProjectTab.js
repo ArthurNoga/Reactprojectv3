@@ -14,7 +14,7 @@ const ProjectTab = (props) => {
 
 
     useEffect(() => {
-        console.log(id)
+
 
     }, [open])
     const handleClickOpen = (id) => {
@@ -45,22 +45,15 @@ const ProjectTab = (props) => {
             editable: false,
         },
         {
-            field: 'mail',
-            headerName: 'Mail',
-            type: 'mail',
+            field: 'description',
+            headerName: 'Description',
             width: 160,
             editable: false,
             renderCell: (params) => (
                 <a href={`${params.value}`}>{params.value}</a>
             )
         },
-        {
-            field: 'tel',
-            headerName: 'Tel',
-            type: 'Tel',
-            width: 160,
-            editable: false,
-        },
+
         {
             field: 'invoiceId',
             headerName: 'Invoice',
@@ -83,8 +76,9 @@ const ProjectTab = (props) => {
         }
     ];
     return (
-        <div>
-            <GridGenric rows={props.project} columns={projectColumns}/>
-        </div>)
+
+
+            <GridGenric rows={props.rows} columns={projectColumns}/>
+   )
 }
 export default ProjectTab

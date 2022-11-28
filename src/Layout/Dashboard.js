@@ -136,7 +136,7 @@ function DashboardContent() {
                             Dashboard
                         </Typography>
                         <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
+                            <Badge  color="secondary" onClick={()=>navigate("Profile")}>
                                 <NotificationsIcon/>
                             </Badge>
                         </IconButton>

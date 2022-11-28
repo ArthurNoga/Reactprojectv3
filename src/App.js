@@ -9,6 +9,7 @@ import SignIn from "./Pages/SignIn";
 import Client from "./Pages/Client";
 import Projects from "./Pages/Projects";
 import Invoices from "./Pages/Invoices";
+import Profile from "./Pages/Profile";
 
 const mapStateToProps = (state) => {
     return {user: state.auth.isLoggedIn}
@@ -16,22 +17,23 @@ const mapStateToProps = (state) => {
 
 const App = (props) => {
 
-    const [isAuth,setIsAuth]=useState(false)
+    const [isAuth, setIsAuth] = useState(false)
 
-    useEffect(()=>{
+    useEffect(() => {
 
 
-    },[props.user])
+    }, [props.user])
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={props.user ? <Dashboard/> : <SignIn />}>
+                <Route path="/" element={props.user ? <Dashboard/> : <SignIn/>}>
 
-                    <Route path="/" element={<Client/>}/>
+                    <Route exact path="/" element={<Client/>}/>
                     <Route path="Clients" element={<Client/>}/>
                     <Route path="Projects" element={<Projects/>}/>
                     <Route path="Invoices" element={<Invoices/>}/>
+                    <Route path="Profile" element={<Profile/>}/>
                 </Route>
 
             </Routes>

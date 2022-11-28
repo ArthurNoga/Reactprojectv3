@@ -19,8 +19,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import MoreTimeIcon from "@mui/icons-material/ShoppingCart";
 import ListItemText from "@mui/material/ListItemText";
-
-
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {useDispatch} from "react-redux";
 import {clearState} from "../features/User/AuthSlice";
 import {Outlet, useNavigate} from "react-router-dom";
@@ -137,7 +137,7 @@ function DashboardContent() {
                         </Typography>
                         <IconButton color="inherit">
                             <Badge  color="secondary" onClick={()=>navigate("Profile")}>
-                                <NotificationsIcon/>
+                                <AccountCircleIcon/>
                             </Badge>
                         </IconButton>
                     </Toolbar>
@@ -174,9 +174,9 @@ function DashboardContent() {
                         <Divider sx={{my: 1}}/>
                         <ListItemButton component={Link} to="/" onClick={dispatch(clearState)}>
                             <ListItemIcon>
-                                <MoreTimeIcon/>
+                                <LogoutIcon/>
                             </ListItemIcon>
-                            <ListItemText primary="Invoice"/>
+                            <ListItemText primary="Disconnect"/>
                         </ListItemButton>
                     </List>
                 </Drawer>

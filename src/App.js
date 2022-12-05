@@ -28,7 +28,6 @@ const App = (props) => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={props.user ? <Dashboard/> : <SignIn/>}>
-
                     <Route exact path="/" element={<Client/>}/>
                     <Route path="Clients" element={<Client/>}/>
                     <Route path="Projects" element={<Projects/>}/>

@@ -4,85 +4,90 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import {useEffect, useState} from "react";
+import {connect, useDispatch} from "react-redux";
+import {changePassword} from "../../features/User/AuthSlice";
 
-export default function DialogChangePassword(props) {
-    const [open, setOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+const mapStateToProps = (state) => {
+    return {user: state.auth.user}
+}
+
+const DialogChangePassword = (props) => {
+    const [chngPassword, setChngPassword] = useState("")
+    const [color, setColor] = useState("warning")
+    const dispatch = useDispatch()
+
+    const [user, setUser] = useState({
+        id: props.user.id,
+        firstname: props.user.attributes.firstname,
+        lastname: props.user.attributes.lastname,
+        username: props.user.attributes.username,
+        password: props.user.attributes.password,
+        price: props.user.attributes.price,
+        globalEarnings: props.user.attributes.globalEarnings
+    })
+
 
     const handleClose = () => {
         props.setOpen(false);
     };
+    const handleChange = (e) => {
+        setChngPassword(e.target.value)
+        setUser({...user, password: e.target.value,})
+    }
+    const handleSubmit = () => {
+        dispatch(changePassword({user}))
+        props.setOpen(false);
+    }
+    useEffect(() => {
+    }, [user])
+
+    const checkMatchingPassword = (value) => {
+        chngPassword === value ? setColor("success") : setColor("warning")
+    }
 
     return (
         <div>
 
             <Dialog open={props.open} onClose={handleClose}>
-                <DialogTitle>Subscribe</DialogTitle>
+                <DialogTitle> Change password</DialogTitle>
                 <DialogContent>
-                    <Typography variant="h6" gutterBottom>
-                        Client
-                    </Typography>
                     <Grid container spacing={2}>
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 required
-                                id="firstName"
-                                name="firstName"
-                                label="First name"
+                                id="password"
+                                name="password"
+                                label="Actual password"
                                 fullWidth
                                 autoComplete="given-name"
                                 variant="standard"
+                                onChange={event => handleChange(event)}
                             />
                         </Grid>
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 required
-                                id="lastName"
-                                name="lastName"
-                                label="Last name"
+                                id="rePassword"
+                                name="rePassword"
+                                label="Confirm password"
                                 fullWidth
                                 autoComplete="family-name"
                                 variant="standard"
+                                onChange={e => checkMatchingPassword(e.target.value)}
+                                color={color}
                             />
                         </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                required
-                                id="mail"
-                                name="mail"
-                                label="@"
-                                fullWidth
-                                autoComplete="adresse mail"
-                                variant="standard"
-                            />
-                        </Grid>
-
-                        <Grid item xs={6} sm={6}>
-                            <TextField
-                                required
-                                id="Tel"
-                                name="Tel"
-                                label="Phone"
-                                fullWidth
-                                autoComplete="phone number"
-                                variant="standard"
-                            />
-                        </Grid>
-
-
                     </Grid>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Subscribe</Button>
+                    <Button onClick={handleSubmit}>Save</Button>
                 </DialogActions>
             </Dialog>
         </div>)
 }
+export default connect(mapStateToProps)(DialogChangePassword)

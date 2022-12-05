@@ -20,12 +20,13 @@ const Client = (props) => {
     }
     const [addClient, setAddClient] = useState(false)
     const [clients, setClients] = useState([])
+
     useEffect(() => {
         setClients(toObjectList(props.clients, "CLIENT"))
 
     }, [props.clients])
 
-    return (<Container>
+    return (
 
             <Grid container spacing={4}>
                 <Grid item xs={12} spacing={4}>
@@ -42,7 +43,7 @@ const Client = (props) => {
 
 
             </Grid>
-        </Container>
+     
     )
 }
 

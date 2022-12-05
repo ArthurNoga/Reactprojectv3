@@ -3,7 +3,7 @@ import ClientTab from "../Components/Clients/ClientTab";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {useEffect, useState} from "react";
-import {toObjectList} from "../helpers/transformations";
+import {reserialize} from "../helpers/transformations";
 import Container from "@mui/material/Container";
 import DialogFormClient from "../Components/Clients/DialogFormClient";
 import Button from "@mui/material/Button";
@@ -22,7 +22,7 @@ const Client = (props) => {
     const [clients, setClients] = useState([])
 
     useEffect(() => {
-        setClients(toObjectList(props.clients, "CLIENT"))
+        setClients(reserialize(props.clients, "CLIENT"))
 
     }, [props.clients])
 

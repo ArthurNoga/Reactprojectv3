@@ -4,6 +4,7 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import AuthService from "../../Services/auth.services";
 import {fetchProjectsByUserId} from "../Projects/ProjectSlice";
 import {useDispatch} from "react-redux";
+import {reserialize} from "../../helpers/transformations";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -36,15 +37,14 @@ export const login = createAsyncThunk("auth/login", async ({username, password},
 });
 
 
-export const changePassword = createAsyncThunk("auth/changePassword", async ({user}, thunkAPI) => {
-
+export const modifyUser = createAsyncThunk("auth/modifyUser", async (user, thunkAPI) => {
     try {
-        const data = await AuthService.changePassword(user);
-
+        const data = await AuthService.modifyUser(user);
+        return data
 
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-        // thunkAPI.dispatch(setMessage(message));
+        console.log(error)
         return thunkAPI.rejectWithValue();
     }
 });
@@ -60,6 +60,16 @@ export const authSlice = createSlice({
         clearState: (state) => {
             state.isLoggedIn = false
             state.user = null
+        },
+        modifyPrice: (state, action) => {
+
+            state.user.attributes.price = action.payload
+        },
+        modifyPasword: (state, action) => {
+            state.user.attributes.password = action.payload
+        },
+        modifyUserInfo(state, action) {
+            state.user.attributes = action.payload
         }
     }, extraReducers: {
         [register.fulfilled]: (state, action) => {
@@ -79,10 +89,11 @@ export const authSlice = createSlice({
         }, [logout.fulfilled]: (state, action) => {
             state.isLoggedIn = false;
             state.user = null;
+
         }
 
     },
 });
 
-export const {clearState} = authSlice.actions
+export const {clearState, modifyPrice, modifyPasword,modifyUserInfo} = authSlice.actions
 export const authSelector = state => state.auth

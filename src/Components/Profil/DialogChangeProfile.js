@@ -8,13 +8,20 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
+import {modifyUser, modifyUserInfo} from "../../features/User/AuthSlice";
 
 export default function DialogChangeProfile(props) {
-    const [open, setOpen] = React.useState(false);
+    const dispatch = useDispatch()
+    const user = useSelector((state) => state.auth.user)
+    const [defineUser, setDefineUser] = useState(user.attributes)
+    const handleChange = (e) => {
+        setDefineUser({...defineUser, [e.target.name]: e.target.value})
+        dispatch(modifyUserInfo(defineUser))
+        dispatch(modifyUser(user))
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    }
 
     const handleClose = () => {
         props.setOpen(false);
@@ -33,49 +40,28 @@ export default function DialogChangeProfile(props) {
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 required
-                                id="firstName"
-                                name="firstName"
+                                id="firstname"
+                                name="firstname"
                                 label="First name"
                                 fullWidth
-                                autoComplete="given-name"
+                                autoComplete={user.attributes.firstname}
                                 variant="standard"
+
+                                onKeyUp={event => handleChange(event)}
                             />
                         </Grid>
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 required
-                                id="lastName"
-                                name="lastName"
+                                id="lastname"
+                                name="lastname"
                                 label="Last name"
                                 fullWidth
-                                autoComplete="family-name"
+                                autoComplete={user.attributes.lastname}
                                 variant="standard"
+                                onKeyUp={event => handleChange(event)}
                             />
                         </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                required
-                                id="mail"
-                                name="mail"
-                                label="@"
-                                fullWidth
-                                autoComplete="adresse mail"
-                                variant="standard"
-                            />
-                        </Grid>
-
-                        <Grid item xs={6} sm={6}>
-                            <TextField
-                                required
-                                id="Tel"
-                                name="Tel"
-                                label="Phone"
-                                fullWidth
-                                autoComplete="phone number"
-                                variant="standard"
-                            />
-                        </Grid>
-
 
                     </Grid>
                 </DialogContent>

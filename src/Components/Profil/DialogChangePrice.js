@@ -8,71 +8,51 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import {connect, useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import {modifyPasword, modifyPrice, modifyUser} from "../../features/User/AuthSlice";
 
-export default function DialogChangePrice(props) {
-    const [open, setOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+const DialogChangePrice = (props) => {
+    const dispatch = useDispatch()
+    const userStore = useSelector((state) => state.auth.user)
 
+    const [price, setPrice] = useState(userStore.attributes.price)
     const handleClose = () => {
         props.setOpen(false);
     };
+    const handleChange = (e) => {
+        setPrice(parseInt(e.target.value))
+    }
+    const handleSubmit = () => {
+        dispatch(modifyPrice(price))
+        dispatch(modifyUser(userStore))
+        props.setOpen(false);
+    }
+    useEffect(() => {
+    }, [userStore])
 
     return (
         <div>
 
             <Dialog open={props.open} onClose={handleClose}>
-                <DialogTitle>Subscribe</DialogTitle>
+                <DialogTitle>Change your price per hour</DialogTitle>
                 <DialogContent>
                     <Typography variant="h6" gutterBottom>
-                        Client
+                        Current price: {userStore.attributes.price}
                     </Typography>
                     <Grid container spacing={2}>
-                        <Grid item xs={6} sm={6}>
-                            <TextField
-                                required
-                                id="firstName"
-                                name="firstName"
-                                label="First name"
-                                fullWidth
-                                autoComplete="given-name"
-                                variant="standard"
-                            />
-                        </Grid>
-                        <Grid item xs={6} sm={6}>
-                            <TextField
-                                required
-                                id="lastName"
-                                name="lastName"
-                                label="Last name"
-                                fullWidth
-                                autoComplete="family-name"
-                                variant="standard"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                required
-                                id="mail"
-                                name="mail"
-                                label="@"
-                                fullWidth
-                                autoComplete="adresse mail"
-                                variant="standard"
-                            />
-                        </Grid>
 
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 required
-                                id="Tel"
-                                name="Tel"
-                                label="Phone"
+                                id="price"
+                                name="price"
+                                label="Price Value .chf"
                                 fullWidth
-                                autoComplete="phone number"
                                 variant="standard"
+                                onChange={event => handleChange(event)}
+
                             />
                         </Grid>
 
@@ -81,8 +61,9 @@ export default function DialogChangePrice(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Subscribe</Button>
+                    <Button onClick={handleSubmit}>Save</Button>
                 </DialogActions>
             </Dialog>
         </div>)
 }
+export default (DialogChangePrice)

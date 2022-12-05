@@ -18,11 +18,9 @@ const ProfilCharts = (props) => {
         let sum = 0
         for (const i in props.projects) {
             if (!i.isOver) {
-                console.log(i)
                 sum += props.projects[i].relationships.invoice.data.id
             }
         }
-        console.log(sum)
         return sum
     }
     useEffect(() => {

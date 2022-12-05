@@ -53,37 +53,26 @@ const logout = () => {
     localStorage.clear()
 };
 
-const changePassword = (user) => {
-    // return fetch(
-    //     API_URL + "devs/" + user.id + "/",
-    //     {
-    //         method: "PUT",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             firstname: user.attributes.firstname,
-    //             lastname: user.attributes.lastname,
-    //             username: user.attributes.username,
-    //             password: user.attributes.password,
-    //             price: user.attributes.price,
-    //             globalEarnings: user.attributes.globalEarnings
-    //         }),
-    //     }
-    // )
-    try {
-        const response = axios.put( API_URL + "devs/" + user.id + "/", user)
-        return response
-    } catch (err) {
-        // custom error
-        console.log(err)
-    }
+const modifyUser = (user) => {
+    console.log(user)
+    const usr={firstname: user.attributes.firstname,
+        lastname: user.attributes.lastname,
+        username: user.attributes.username,
+        password: user.attributes.password,
+        price: user.attributes.price,
+        globalEarning: user.attributes.globalEarning}
+
+    return axios
+        .put(API_URL + "devs/" + user.id + "/", usr)
+        .then((response) => {
+            console.log(response)
+        })
 }
 const AuthService = {
     register,
     logout,
     login,
-    changePassword
+    modifyUser
 };
 
 export default AuthService

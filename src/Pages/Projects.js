@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {useEffect, useState} from "react";
 import ProjectTab from "../Components/Projects/ProjectTab";
-import {toObjectList} from "../helpers/transformations";
+import {reserialize} from "../helpers/transformations";
 import Button from "@mui/material/Button";
 import DialogFormClient from "../Components/Clients/DialogFormClient";
 
@@ -21,7 +21,7 @@ const Projects = (props) => {
     }
     const [addProject,setAddProject]=useState(false)
     useEffect(() => {
-        setProjects(toObjectList(props.projects, "PROJECT"))
+        setProjects(reserialize(props.projects, "PROJECT"))
 
     }, [props.projects])
 

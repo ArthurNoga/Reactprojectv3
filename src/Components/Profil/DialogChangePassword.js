@@ -7,28 +7,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from "@mui/material/Grid";
 import {useEffect, useState} from "react";
-import {connect, useDispatch} from "react-redux";
-import {changePassword} from "../../features/User/AuthSlice";
-
-
-const mapStateToProps = (state) => {
-    return {user: state.auth.user}
-}
+import {connect, useDispatch, useSelector} from "react-redux";
+import {modifyPasword, modifyUser} from "../../features/User/AuthSlice";
 
 const DialogChangePassword = (props) => {
     const [chngPassword, setChngPassword] = useState("")
     const [color, setColor] = useState("warning")
     const dispatch = useDispatch()
-
-    const [user, setUser] = useState({
-        id: props.user.id,
-        firstname: props.user.attributes.firstname,
-        lastname: props.user.attributes.lastname,
-        username: props.user.attributes.username,
-        password: props.user.attributes.password,
-        price: props.user.attributes.price,
-        globalEarnings: props.user.attributes.globalEarnings
-    })
+    const user=useSelector((state)=>state.auth.user)
 
 
     const handleClose = () => {
@@ -36,14 +22,13 @@ const DialogChangePassword = (props) => {
     };
     const handleChange = (e) => {
         setChngPassword(e.target.value)
-        setUser({...user, password: e.target.value,})
     }
     const handleSubmit = () => {
-        dispatch(changePassword({user}))
+        dispatch(modifyPasword(chngPassword))
+        dispatch(modifyUser(user))
         props.setOpen(false);
     }
-    useEffect(() => {
-    }, [user])
+
 
     const checkMatchingPassword = (value) => {
         chngPassword === value ? setColor("success") : setColor("warning")
@@ -90,4 +75,4 @@ const DialogChangePassword = (props) => {
             </Dialog>
         </div>)
 }
-export default connect(mapStateToProps)(DialogChangePassword)
+export default DialogChangePassword

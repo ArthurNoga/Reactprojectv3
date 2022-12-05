@@ -1,6 +1,6 @@
-export const toObjectList = (items, type) => {
+export const reserialize = (items, type) => {
     let obj = {}
-    const data = []
+    let data = []
 
 
     switch (type) {
@@ -19,7 +19,22 @@ export const toObjectList = (items, type) => {
             }
 
             break;
-        case "PROJECT":
+        case "USER":
+            data = {
+                id: items.id,
+                firstname: items.attributes.firstname,
+                lastname: items.attributes.lastname,
+                username: items.attributes.username,
+                password: items.attributes.password,
+                price: items.attributes.price,
+                globalEarnings:items.attributes.globalEarnings
+            }
+
+
+            break;
+        case
+        "PROJECT"
+        :
             for (const x in items) {
 
                 obj = {

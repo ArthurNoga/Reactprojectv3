@@ -22,7 +22,7 @@ const Client = (props) => {
     const [clients, setClients] = useState([])
 
     useEffect(() => {
-        setClients(reserialize(props.clients, "CLIENT"))
+        setClients(reserialize(props.clients))
 
     }, [props.clients])
 

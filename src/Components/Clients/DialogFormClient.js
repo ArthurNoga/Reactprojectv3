@@ -13,16 +13,7 @@ import {useState} from "react";
 export default function DialogFormClient(props) {
     const [open, setOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
 
-    const [client, setClient] = useState({
-        fisrtName: "",
-        lastName: "",
-        mail: "",
-        Tel: "",
-    });
 
     const handleClose = () => {
         props.setOpen(false);

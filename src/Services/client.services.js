@@ -23,5 +23,21 @@ const getCLientById = async (id) => {
         })
 }
 
-const ClientServices = {addClient, getCLientById}
+
+const fetchClientsByUserId = (userid) => {
+
+    let clients = [];
+    const projects = [];
+
+    return axios
+        .get(API_URL + "fetchuserdata/?dev=15",)
+        .then((response) => {
+            response.data.map((i) => {
+            clients.push(i.client);
+
+            });
+            return clients
+        });
+};
+const ClientServices = {addClient, getCLientById,fetchClientsByUserId}
 export default ClientServices

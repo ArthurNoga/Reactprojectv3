@@ -6,15 +6,26 @@ const config = {
         'Content-Type': 'application/json'
     }
 };
+
 const fetchProjectsByUserId = (userid) => {
-    console.log(userid)
+    let project = {id: "",name: "", description: "", technology: "",isOver:""};
+    let clients = [];
+    const projects = [];
+
         return axios
-        .get(API_URL + "fetchdata/?dev=15",)
+        .get(API_URL + "fetchuserdata/?dev=15",)
         .then((response) => {
-            response.data.map((project) => {
-                console.log(project.name)
-            })
-            return null;
+            response.data.map((i) => {
+                project.id = i.id;
+                project.name = i.name;
+                project.description = i.description;
+                project.technology = i.technology;
+                project.isOver = i.isOver;
+
+                projects.push(project);
+
+            });
+            return projects
         });
 };
 

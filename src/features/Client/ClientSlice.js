@@ -44,6 +44,26 @@ export const setClientInUse = createAsyncThunk(
         }
     }
 )
+
+export const fetchClient = createAsyncThunk(
+    "client/fetchClient",
+    async (userID, thunkAPI) => {
+        try {
+
+            const response = await ClientServices.fetchClientsByUserId(userID)
+            return response
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+)
 export const clientSlice = createSlice(
     {
         name: "client",
@@ -64,6 +84,10 @@ export const clientSlice = createSlice(
             builder
                 .addCase(setClientInUse.fulfilled, (state, action) => {
                     state.clientInUse = action.payload
+                }).addCase(fetchClient.fulfilled, (state, action) => {
+                    state.clients = action.payload
+                }).addCase(addClient.fulfilled, (state, action) => {
+                    state.clients.push(action.payload)
                 })
 
 

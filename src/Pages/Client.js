@@ -25,7 +25,7 @@ const Client = (props) => {
         setClients(reserialize(props.clients))
 
     }, [props.clients])
-
+    console.log(clients)
     return (
 
             <Grid container spacing={4}>

@@ -7,16 +7,14 @@ const config = {
     }
 };
 const fetchProjectsByUserId = (userid) => {
-    return axios
-        .get(API_URL + "projects/",)
+    console.log(userid)
+        return axios
+        .get(API_URL + "fetchdata/?dev=15",)
         .then((response) => {
-            const data = response.data
-            const client = []
-            data.data.map(u => {
-                    client.push(u.attributes.client)
+            response.data.map((project) => {
+                console.log(project.name)
             })
-
-            return {data, client}
+            return null;
         });
 };
 

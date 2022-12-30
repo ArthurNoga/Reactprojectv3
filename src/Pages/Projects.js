@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
     }
 }
 const Projects = (props) => {
-    const [projects, setProjects] = useState([])
+    const [projects, setProjects] = useState(projects)
     const handleOpenModalForm=()=>{
         setAddProject(true)
     }
@@ -24,7 +24,7 @@ const Projects = (props) => {
         setProjects(reserialize(props.projects, "PROJECT"))
 
     }, [props.projects])
-
+    console.log(projects)
     return (
 
         <Grid container spacing={4}>

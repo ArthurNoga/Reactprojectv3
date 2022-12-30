@@ -15,39 +15,40 @@ import {modifyUser, modifyUserInfo} from "../../features/User/AuthSlice";
 export default function DialogChangeProfile(props) {
     const dispatch = useDispatch()
     const user = useSelector((state) => state.auth.user)
-    const [defineUser, setDefineUser] = useState(user.attributes)
+    const [defineUser, setDefineUser] = useState(user)
     const handleChange = (e) => {
         setDefineUser({...defineUser, [e.target.name]: e.target.value})
-        dispatch(modifyUserInfo(defineUser))
-        dispatch(modifyUser(user))
-
     }
 
+    const handleSubmit =()  => {
+
+        dispatch(modifyUserInfo(defineUser))
+        dispatch(modifyUser(defineUser))
+        props.setOpen(false)
+    }
     const handleClose = () => {
         props.setOpen(false);
     };
-
+    console.log(user)
     return (
         <div>
 
             <Dialog open={props.open} onClose={handleClose}>
-                <DialogTitle>Subscribe</DialogTitle>
+                <DialogTitle>Change profil infos</DialogTitle>
                 <DialogContent>
-                    <Typography variant="h6" gutterBottom>
-                        Client
-                    </Typography>
+
                     <Grid container spacing={2}>
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 required
                                 id="firstname"
                                 name="firstname"
-                                label="First name"
+                                label="Firstname"
                                 fullWidth
-                                autoComplete={user.attributes.firstname}
+                                autoComplete={user.firstname}
                                 variant="standard"
 
-                                onKeyUp={event => handleChange(event)}
+                                onChange={event => handleChange(event)}
                             />
                         </Grid>
                         <Grid item xs={6} sm={6}>
@@ -57,9 +58,9 @@ export default function DialogChangeProfile(props) {
                                 name="lastname"
                                 label="Last name"
                                 fullWidth
-                                autoComplete={user.attributes.lastname}
+                                autoComplete={user.lastname}
                                 variant="standard"
-                                onKeyUp={event => handleChange(event)}
+                                onChange={event => handleChange(event)}
                             />
                         </Grid>
 
@@ -67,7 +68,7 @@ export default function DialogChangeProfile(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Subscribe</Button>
+                    <Button onClick={handleSubmit}>Save</Button>
                 </DialogActions>
             </Dialog>
         </div>)

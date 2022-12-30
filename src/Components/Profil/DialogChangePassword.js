@@ -7,33 +7,45 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from "@mui/material/Grid";
 import {useEffect, useState} from "react";
-import {connect, useDispatch, useSelector} from "react-redux";
-import {modifyPasword, modifyUser} from "../../features/User/AuthSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {modifyPassword, modifyUser} from "../../features/User/AuthSlice";
+
 
 const DialogChangePassword = (props) => {
     const [chngPassword, setChngPassword] = useState("")
     const [color, setColor] = useState("warning")
+    const [match, setMatch] = useState(false)
+
     const dispatch = useDispatch()
-    const user=useSelector((state)=>state.auth.user)
+    const user = useSelector((state) => state.auth.user)
+    const [defineUser, setDefineUser] = useState(user)
+    const handleChange = (e) => {
+        setDefineUser({...defineUser, password: e.target.value})
+        setChngPassword(e.target.value)
 
-
+    }
     const handleClose = () => {
+        setMatch(false)
         props.setOpen(false);
     };
-    const handleChange = (e) => {
-        setChngPassword(e.target.value)
-    }
-    const handleSubmit = () => {
-        dispatch(modifyPasword(chngPassword))
-        dispatch(modifyUser(user))
-        props.setOpen(false);
-    }
 
+    const handleSubmit = () => {
+        if (match) {
+            console.log(chngPassword)
+            dispatch(modifyPassword(chngPassword))
+            dispatch(modifyUser(user))
+            props.setOpen(false);
+        } else return (alert("Passwords do not match"))
+    }
 
     const checkMatchingPassword = (value) => {
+        chngPassword === value ? setMatch(true) : setMatch(false)
         chngPassword === value ? setColor("success") : setColor("warning")
+        setDefineUser({...defineUser, password: value})
     }
+    useEffect(() => {
 
+    }, [chngPassword])
     return (
         <div>
 
@@ -46,7 +58,7 @@ const DialogChangePassword = (props) => {
                                 required
                                 id="password"
                                 name="password"
-                                label="Actual password"
+                                label="New password"
                                 fullWidth
                                 autoComplete="given-name"
                                 variant="standard"
@@ -57,7 +69,6 @@ const DialogChangePassword = (props) => {
                             <TextField
                                 required
                                 id="rePassword"
-                                name="rePassword"
                                 label="Confirm password"
                                 fullWidth
                                 autoComplete="family-name"
@@ -70,7 +81,7 @@ const DialogChangePassword = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleSubmit}>Save</Button>
+                    <Button onClick={handleSubmit} disabled={!match}>Save</Button>
                 </DialogActions>
             </Dialog>
         </div>)

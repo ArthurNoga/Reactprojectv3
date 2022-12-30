@@ -8,6 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import {useState} from "react";
 
 export default function DialogFormClient(props) {
     const [open, setOpen] = React.useState(false);
@@ -15,6 +16,13 @@ export default function DialogFormClient(props) {
     const handleClickOpen = () => {
         setOpen(true);
     };
+
+    const [client, setClient] = useState({
+        fisrtName: "",
+        lastName: "",
+        mail: "",
+        Tel: "",
+    });
 
     const handleClose = () => {
         props.setOpen(false);

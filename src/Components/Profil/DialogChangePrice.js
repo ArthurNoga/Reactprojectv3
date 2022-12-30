@@ -10,23 +10,25 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import {connect, useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {modifyPasword, modifyPrice, modifyUser} from "../../features/User/AuthSlice";
+import { modifyPrice, modifyUser} from "../../features/User/AuthSlice";
 
 
 const DialogChangePrice = (props) => {
     const dispatch = useDispatch()
     const userStore = useSelector((state) => state.auth.user)
-
-    const [price, setPrice] = useState(userStore.attributes.price)
+    const [defineUser, setDefineUser] = useState(userStore)
+    const [price, setPrice] = useState(userStore.price)
     const handleClose = () => {
         props.setOpen(false);
     };
+
     const handleChange = (e) => {
-        setPrice(parseInt(e.target.value))
+        setDefineUser({...defineUser, [e.target.name]: e.target.value})
+        setPrice(e.target.value)
     }
     const handleSubmit = () => {
         dispatch(modifyPrice(price))
-        dispatch(modifyUser(userStore))
+        dispatch(modifyUser(defineUser))
         props.setOpen(false);
     }
     useEffect(() => {
@@ -39,7 +41,7 @@ const DialogChangePrice = (props) => {
                 <DialogTitle>Change your price per hour</DialogTitle>
                 <DialogContent>
                     <Typography variant="h6" gutterBottom>
-                        Current price: {userStore.attributes.price}
+                        Current price: {userStore.price}
                     </Typography>
                     <Grid container spacing={2}>
 

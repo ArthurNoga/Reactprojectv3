@@ -7,21 +7,12 @@ const config = {
     }
 };
 const addClient = (firstname, lastname, mail, tel) => {
-    return fetch(
-        API_URL + "devs/",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                firstname,
-                lastname,
-                mail,
-                tel
-            }),
-        }
-    )
+    return axios.post(API_URL + "addClient", {
+        firstname,
+        lastname,
+        mail,
+        tel
+    }, config);
 };
 
 const getCLientById = async (id) => {

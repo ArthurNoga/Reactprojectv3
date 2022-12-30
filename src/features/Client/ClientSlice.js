@@ -30,7 +30,7 @@ export const setClientInUse = createAsyncThunk(
         try {
 
             const response = await ClientServices.getCLientById(userID)
-            console.log(response.attributes+"fetchClient")
+            console.log(response.attributes + "fetchClient")
             return response
         } catch (error) {
             const message =
@@ -54,12 +54,16 @@ export const clientSlice = createSlice(
             },
             clearClientInUse: (state, action) => {
                 state.clientInUse = {}
-            }
+            },
+            setClientInUse(state, action) {
+                state.clientInUse = action.payload
+            },
+
         },
         extraReducers(builder) {
             builder
-                .addCase(setClientInUse.fulfilled,(state,action)=>{
-                    state.clientInUse= action.payload
+                .addCase(setClientInUse.fulfilled, (state, action) => {
+                    state.clientInUse = action.payload
                 })
 
 

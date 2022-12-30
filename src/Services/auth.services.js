@@ -6,44 +6,37 @@ const config = {
         'Content-Type': 'application/json'
     }
 };
-const register = (firstname, lastname, username, password, price = 0) => {
-    return fetch(
-        API_URL + "devs/",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                firstname,
-                lastname,
-                username,
-                password,
-                price
-            }),
-        }
-    )
-};
+//export put request to url dev for register a new user
+export const Register = newUser => {
+    const register=true;
+    const error=false;
+    return axios
+        .post(API_URL + 'devs/', {
+            firstname: newUser.firstname,
+            lastname: newUser.lastname,
+            username: newUser.username,
+            price: newUser.price,
+            globalEarnings: newUser.globalEarnings,
+            password: newUser.password
+
+        }, config)
+        .then(response => {
+           return  register
+        })
+        .catch(err => {
+           return error
+        })
+}
+
 
 const login = (username, password) => {
     return axios
-        .get(API_URL + "devs/",)
+        .get(API_URL + "auth/?username="+username+"&password="+password)
         .then((response) => {
-
-            const datas = response.data
-
-            let data = {}
-
-            datas.data.map(u => {
-                if (u.attributes.username === username && u.attributes.password === password) {
-                    data = u
-                }
-            })
-            const err = new Error("not found")
-            console.log(response)
-            return data.attributes.username == username && data.attributes.password == password ? data : err
-
-
+            if (response.data.length === 0) {
+                throw new Error('User not found');
+            }
+        return response.data[0]
         })
 };
 
@@ -54,13 +47,15 @@ const logout = () => {
 };
 
 const modifyUser = (user) => {
-    console.log(user)
-    const usr={firstname: user.attributes.firstname,
-        lastname: user.attributes.lastname,
-        username: user.attributes.username,
-        password: user.attributes.password,
-        price: user.attributes.price,
-        globalEarning: user.attributes.globalEarning}
+
+    const usr = {
+        firstname: user.firstname,
+        lastname: user.lastname,
+        username: user.username,
+        password: user.password,
+        price: user.price,
+        globalEarning: user.globalEarning
+    }
 
     return axios
         .put(API_URL + "devs/" + user.id + "/", usr)
@@ -69,7 +64,7 @@ const modifyUser = (user) => {
         })
 }
 const AuthService = {
-    register,
+    Register,
     logout,
     login,
     modifyUser

@@ -12,7 +12,7 @@ export const fetchProjectsByUserId = createAsyncThunk(
         try {
             const response = await projectService.fetchProjectsByUserId(userid);
             thunkAPI.dispatch(setClients(response.client))
-            return response.data.data;
+            return response;
         } catch (error) {
             const message =
                 (error.response &&

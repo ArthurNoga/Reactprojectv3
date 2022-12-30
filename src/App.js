@@ -10,6 +10,7 @@ import Client from "./Pages/Client";
 import Projects from "./Pages/Projects";
 import Invoices from "./Pages/Invoices";
 import Profile from "./Pages/Profile";
+import SignUp from "./Pages/SIgnUp";
 
 const mapStateToProps = (state) => {
     return {user: state.auth.isLoggedIn}
@@ -34,6 +35,7 @@ const App = (props) => {
                     <Route path="Invoices" element={<Invoices/>}/>
                     <Route path="Profile" element={<Profile/>}/>
                 </Route>
+                <Route path="signup" element={<SignUp/>}/>
 
             </Routes>
         </BrowserRouter>

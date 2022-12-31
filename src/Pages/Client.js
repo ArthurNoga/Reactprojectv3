@@ -7,7 +7,7 @@ import {reserialize} from "../helpers/transformations";
 import Container from "@mui/material/Container";
 import DialogFormClient from "../Components/Clients/DialogFormClient";
 import Button from "@mui/material/Button";
-
+import {useSelector} from 'react-redux'
 
 const mapStateToProps = (state) => {
     return {clients: state.client.clients}
@@ -15,16 +15,13 @@ const mapStateToProps = (state) => {
 
 
 const Client = (props) => {
+    const clients=useSelector(state=>state.client.clients)
     const handleOpenModalForm = () => {
         setAddClient(true)
     }
     const [addClient, setAddClient] = useState(false)
-    const [clients, setClients] = useState("")
 
-    useEffect(() => {
-        setClients(props.clients)
 
-    }, [props.clients])
 
     return (
 

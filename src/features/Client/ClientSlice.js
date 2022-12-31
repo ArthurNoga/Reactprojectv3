@@ -7,10 +7,13 @@ import {login} from "../User/AuthSlice";
 const initialState = {clients: [], clientInUse: {}}
 
 export const addClient = createAsyncThunk("client/AddClient",
-    async ({firstname, lastname, mail, tel}, thunkAPI) => {
+    async (client, thunkAPI) => {
         try {
-            const response = await ClientServices.addClient(firstname, lastname, mail, tel);
-            console.log(response.data)
+            const response = await ClientServices.addClientDb(client);
+            if (response.status === 200) {
+
+                return response.data;
+            }
             return response.data;
         } catch (error) {
             const message =
@@ -78,6 +81,9 @@ export const clientSlice = createSlice(
             setClientInUse(state, action) {
                 state.clientInUse = action.payload
             },
+            addClientState(state, action) {
+                state.clients.push(action.payload)
+            },
 
         },
         extraReducers(builder) {
@@ -87,7 +93,7 @@ export const clientSlice = createSlice(
                 }).addCase(fetchClient.fulfilled, (state, action) => {
                     state.clients = action.payload
                 }).addCase(addClient.fulfilled, (state, action) => {
-                    state.clients.push(action.payload)
+
                 })
 
 
@@ -95,5 +101,5 @@ export const clientSlice = createSlice(
     }
 )
 
-export const {setClients, clearClientInUse} = clientSlice.actions
+export const {setClients, clearClientInUse,addClientState} = clientSlice.actions
 

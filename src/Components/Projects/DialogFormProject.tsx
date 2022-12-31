@@ -1,25 +1,21 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import {useState} from "react";
+import TextField from "@mui/material/TextField";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import * as React from "react";
 import {useDispatch} from "react-redux";
-import {addClient, addClientState, fetchClient} from "../../features/Client/ClientSlice";
+import {useState} from "react";
 
-
-export default function DialogFormClient(props) {
+const DialogFormProject = (props) => {
 
     const dispatch = useDispatch();
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(addClient(client))
-        dispatch(fetchClient())
+        console.log(client)
 
 
     };
@@ -37,7 +33,6 @@ export default function DialogFormClient(props) {
     const handleClose = () => {
         props.setOpen(false);
     };
-
     return (
         <div>
 
@@ -116,3 +111,4 @@ export default function DialogFormClient(props) {
             </Dialog>
         </div>)
 }
+export default DialogFormProject

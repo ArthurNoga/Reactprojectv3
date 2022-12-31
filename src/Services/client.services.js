@@ -6,13 +6,15 @@ const config = {
         'Content-Type': 'application/json'
     }
 };
-const addClient = (firstname, lastname, mail, tel) => {
-    return axios.post(API_URL + "addClient", {
-        firstname,
-        lastname,
-        mail,
-        tel
-    }, config);
+const addClientDb = (client) => {
+    return axios.post(API_URL + "client/create", client, config)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
 };
 
 const getCLientById = async (id) => {
@@ -49,5 +51,5 @@ const fetchClientsByUserId = (userid) => {
 
 
 };
-const ClientServices = {addClient, getCLientById,fetchClientsByUserId}
+const ClientServices = {addClientDb, getCLientById,fetchClientsByUserId}
 export default ClientServices

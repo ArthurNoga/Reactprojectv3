@@ -29,8 +29,17 @@ const fetchProjectsByUserId = (userid) => {
         });
 };
 
+const addProject = (project) => {
+    return axios
+        .post(API_URL + "/project/create", project, config)
+        .then((response) => {
+            return response.data;
+        });
+};
+
 const projectService = {
-    fetchProjectsByUserId
+    fetchProjectsByUserId,
+    addProject
 }
 
 export default projectService

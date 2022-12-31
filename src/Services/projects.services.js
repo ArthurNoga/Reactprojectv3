@@ -13,7 +13,7 @@ const fetchProjectsByUserId = (userid) => {
     const projects = [];
 
         return axios
-        .get(API_URL + "fetchuserdata/?dev=15",)
+        .get(API_URL + "fetchproject?dev=15",)
         .then((response) => {
             response.data.map((i) => {
                 project.id = i.id;

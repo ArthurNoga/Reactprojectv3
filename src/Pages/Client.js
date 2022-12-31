@@ -19,13 +19,13 @@ const Client = (props) => {
         setAddClient(true)
     }
     const [addClient, setAddClient] = useState(false)
-    const [clients, setClients] = useState([])
+    const [clients, setClients] = useState("")
 
     useEffect(() => {
-        setClients(reserialize(props.clients))
+        setClients(props.clients)
 
     }, [props.clients])
-    console.log(clients)
+
     return (
 
             <Grid container spacing={4}>

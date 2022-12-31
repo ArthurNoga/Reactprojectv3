@@ -28,16 +28,26 @@ const fetchClientsByUserId = (userid) => {
 
     let clients = [];
     const projects = [];
-
     return axios
-        .get(API_URL + "fetchuserdata/?dev=15",)
+        .get(API_URL + "fetchuserclient/?dev=15",)
         .then((response) => {
-            response.data.map((i) => {
-            clients.push(i.client);
+            console.log(response.data)
+            response.data.map((i,) => {
+                const client = {
+                    id: i.id,
+                    firstname: i.firstname,
+                    lastname: i.lastname,
+                    mail: i.mail,
+                    tel: i.tel,
+                    url: i.url,
+                }
+                clients.push(client);
+            })
 
+                return clients;
             });
-            return clients
-        });
+
+
 };
 const ClientServices = {addClient, getCLientById,fetchClientsByUserId}
 export default ClientServices

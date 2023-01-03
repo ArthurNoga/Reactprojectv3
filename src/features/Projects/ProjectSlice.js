@@ -25,23 +25,40 @@ export const fetchProjectsByUserId = createAsyncThunk(
         }
     }
 );
+export const addProject = createAsyncThunk(
+    "project/addProject",
+    async (project, thunkAPI) => {
+        try {
+            const response = await projectService.addProject(project);
+            return response;
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue();
+        }
+    }
+);
 export const projectSlice = createSlice(
     {
         name: "project",
         initialState,
         reducers:{},
-        extraReducers:{
-            [fetchProjectsByUserId.fulfilled]: (state, action) => {
-                state.projects=action.payload
-            },
-            [fetchProjectsByUserId.pending]: (state, action) => {
-                state.projects=[]
-            },
-            [fetchProjectsByUserId.rejected]: (state, action) => {
-                state.projects=[]
-            },
-        }
+        extraReducers(builder) {
+            builder
+                .addCase(fetchProjectsByUserId.fulfilled, (state, action) => {
+                    state.projects = action.payload;
+                })
+                .addCase(addProject.fulfilled, (state, action) => {
+                    state.projects.push(action.payload);
+                })
 
+
+    },
     }
 )
 

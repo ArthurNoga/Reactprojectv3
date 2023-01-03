@@ -31,7 +31,7 @@ const fetchProjectsByUserId = (userid) => {
 
 const addProject = (project) => {
     return axios
-        .post(API_URL + "/project/create", project, config)
+        .post(API_URL + "project/create", project, config)
         .then((response) => {
             return response.data;
         });

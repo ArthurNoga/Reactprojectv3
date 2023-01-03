@@ -1,5 +1,5 @@
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
+
 import DialogContent from "@mui/material/DialogContent";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -7,48 +7,74 @@ import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import * as React from "react";
-import {useDispatch} from "react-redux";
-import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+
+import clientServices from "../../Services/client.services";
+import DataTable from "./TableClientProject";
+import {getAllClients} from "../../features/Client/ClientSlice";
+import {addProject} from "../../features/Projects/ProjectSlice";
 
 const DialogFormProject = (props) => {
 
+
     const dispatch = useDispatch();
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(client)
-
+        setProject({...project, client: clientId})
+        dispatch(addProject(project));
+        props.setOpen(false);
 
     };
 
-    const [client, setClient] = useState({
+    const filteredData = []
+    const handleFilter = (event) => {
+        event.preventDefault();
+        const filteredData = clients.filter((client) => client.lastname.toLowerCase().includes(event.target.value.toLowerCase()))
+        event.target.value.length > 0 ? setClients(filteredData) : setClients(data)
 
-    });
-
+    };
+    const [devId, setDevId] = useState(0);
+    const [clients, setClients] = useState({});
+    const [project, setProject] = useState({});
+    const [clientId, setClientId] = useState();
     const handleChange = (event) => {
-        setClient({
-            ...client,
+        setProject({
+            ...project,
             [event.target.name]: event.target.value
         });
     };
     const handleClose = () => {
         props.setOpen(false);
     };
+
+    const data = useSelector(state => state.client.allClients)
+    const user = useSelector(state => state.auth.user)
+    useEffect(() => {
+        dispatch(getAllClients());
+        setClients(data);
+        setProject({...project, dev: user.id})
+
+    }, [props.open,clientId])
+
+
     return (
         <div>
 
-            <Dialog open={props.open} onClose={handleClose}>
-                <DialogTitle>Subscribe</DialogTitle>
+            <Dialog open={props.open} onClose={handleClose} fullScreen={true}>
+
                 <DialogContent>
                     <Typography variant="h6" gutterBottom>
-                        Client
+                        Project Details
                     </Typography>
                     <Grid container spacing={2}>
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 required
-                                id="firstName"
-                                name="firstname"
-                                label="First name"
+                                id="Name"
+                                name="name"
+                                label="Name"
                                 fullWidth
                                 autoComplete="given-name"
                                 variant="standard"
@@ -60,9 +86,9 @@ const DialogFormProject = (props) => {
                         <Grid item xs={6} sm={6}>
                             <TextField
                                 required
-                                id="lastName"
-                                name="lastname"
-                                label="Last name"
+                                id="technology"
+                                name="technology"
+                                label="Technology"
                                 fullWidth
                                 autoComplete="family-name"
                                 variant="standard"
@@ -74,11 +100,12 @@ const DialogFormProject = (props) => {
                         <Grid item xs={6}>
                             <TextField
                                 required
-                                id="mail"
-                                name="mail"
-                                label="@"
+                                id="description"
+                                name="description"
+                                label="description"
                                 fullWidth
                                 autoComplete="adresse mail"
+                                multiline={true}
                                 variant="standard"
                                 onChange={e => {
                                     handleChange(e)
@@ -86,19 +113,20 @@ const DialogFormProject = (props) => {
                             />
                         </Grid>
 
-                        <Grid item xs={6} sm={6}>
+                        <Grid item xs={12}>
                             <TextField
                                 required
-                                id="Tel"
-                                name="Tel"
-                                label="Phone"
+                                id="client"
+                                name="client"
+                                label="Search Client by firstanme"
                                 fullWidth
-                                autoComplete="phone number"
+                                autoComplete="client"
                                 variant="standard"
                                 onChange={e => {
-                                    handleChange(e)
-                                }}
-                            />
+                                    handleFilter(e)
+                                }}/>
+                            <DataTable rows={clients} idCLient={setClientId}/>
+
                         </Grid>
 
 

@@ -4,7 +4,7 @@ import ClientServices from "../../Services/client.services";
 import {login} from "../User/AuthSlice";
 
 
-const initialState = {clients: [], clientInUse: {}}
+const initialState = {clients: [], clientInUse: {},allClients:[]};
 
 export const addClient = createAsyncThunk("client/AddClient",
     async (client, thunkAPI) => {
@@ -67,6 +67,25 @@ export const fetchClient = createAsyncThunk(
         }
     }
 )
+export const getAllClients = createAsyncThunk(
+    "client/getAllClients",
+    async (userID, thunkAPI) => {
+        try {
+
+            const response = await ClientServices.getAllClients()
+            return response
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+)
 export const clientSlice = createSlice(
     {
         name: "client",
@@ -94,6 +113,8 @@ export const clientSlice = createSlice(
                     state.clients = action.payload
                 }).addCase(addClient.fulfilled, (state, action) => {
 
+                }).addCase(getAllClients.fulfilled, (state, action) => {
+                    state.allClients = action.payload
                 })
 
 

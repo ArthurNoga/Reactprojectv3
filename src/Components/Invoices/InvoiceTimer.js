@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 
 
 const InvoiceTimer = (props) => {
-    const [isCounting, setIsCounting] = useState('false')
+
     const ButtonStyle = {
         maxWidth: '100px', maxHeight: '100px', minWidth: '100px', minHeight: '100px'
     }
@@ -17,7 +17,6 @@ const InvoiceTimer = (props) => {
 
     useEffect(() => {
         let interval = null;
-
         if (isActive && isPaused === false) {
             interval = setInterval(() => {
                 setTime((time) => time + 10);

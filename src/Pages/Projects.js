@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import ProjectTab from "../Components/Projects/ProjectTab";
 import {reserialize} from "../helpers/transformations";
 import Button from "@mui/material/Button";
-
+import DialogFormProject from "../Components/Projects/DialogFormProject";
 
 
 const mapStateToProps = (state) => {
@@ -31,7 +31,7 @@ const Projects = (props) => {
             <Grid item xs={12} spacing={4}>
                 <Paper sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
                     <Button variant="contained" color="primary" onClick={handleOpenModalForm}>Add Project</Button>
-
+                    <DialogFormProject open={addProject} setOpen={setAddProject}/>
                 </Paper>
             </Grid>
             <Grid item xs={12}>

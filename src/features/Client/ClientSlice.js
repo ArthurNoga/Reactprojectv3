@@ -16,13 +16,6 @@ export const addClient = createAsyncThunk("client/AddClient",
             }
             return response.data;
         } catch (error) {
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-
             return thunkAPI.rejectWithValue();
         }
     }
@@ -33,16 +26,9 @@ export const setClientInUse = createAsyncThunk(
         try {
 
             const response = await ClientServices.getCLientById(userID)
-            console.log(response.attributes + "fetchClient")
+            console.log(response + "fetchClient")
             return response
         } catch (error) {
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-
             return thunkAPI.rejectWithValue(error);
         }
     }
@@ -56,17 +42,14 @@ export const fetchClient = createAsyncThunk(
             const response = await ClientServices.fetchClientsByUserId(userID)
             return response
         } catch (error) {
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
 
             return thunkAPI.rejectWithValue(error);
         }
     }
 )
+
+
+
 export const getAllClients = createAsyncThunk(
     "client/getAllClients",
     async (userID, thunkAPI) => {
@@ -75,13 +58,6 @@ export const getAllClients = createAsyncThunk(
             const response = await ClientServices.getAllClients()
             return response
         } catch (error) {
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-
             return thunkAPI.rejectWithValue(error);
         }
     }
@@ -103,6 +79,9 @@ export const clientSlice = createSlice(
             addClientState(state, action) {
                 state.clients.push(action.payload)
             },
+            getClientByid(state, action) {
+                state.clientInUse = state.clients.filter(client => client._id === action.payload)[0]
+            },
 
         },
         extraReducers(builder) {
@@ -122,5 +101,5 @@ export const clientSlice = createSlice(
     }
 )
 
-export const {setClients, clearClientInUse,addClientState} = clientSlice.actions
+export const {setClients, clearClientInUse,addClientState,getClientByid} = clientSlice.actions
 

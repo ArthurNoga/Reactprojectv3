@@ -19,10 +19,25 @@ const addClientDb = (client) => {
 
 const getCLientById = async (id) => {
 
-    await axios.get(API_URL + "clients/" + id + "/")
+    await axios
+    const clients ={}
+
+    return axios
+        .get(API_URL + "clients/" + id + "/")
         .then((response) => {
-            return response.data.data
+
+            const i = response.data
+            const client = {
+                id: i.id,
+                firstname: i.firstname,
+                lastname: i.lastname,
+                mail: i.mail,
+                tel: i.tel,
+                url: i.url,
+            }
+        return client
         })
+
 }
 
 const getAllClients = async () => {
@@ -49,9 +64,8 @@ const getAllClients = async () => {
 const fetchClientsByUserId = (userid) => {
 
     let clients = [];
-    const projects = [];
     return axios
-        .get(API_URL + "fetchuserclient/?dev="+userid,)
+        .get(API_URL + "fetchuserclient/?dev=" + userid,)
         .then((response) => {
             response.data.map((i,) => {
                 const client = {
@@ -65,10 +79,10 @@ const fetchClientsByUserId = (userid) => {
                 clients.push(client);
             })
 
-                return clients;
-            });
+            return clients;
+        });
 
 
 };
-const ClientServices = {addClientDb, getCLientById,fetchClientsByUserId,getAllClients}
+const ClientServices = {addClientDb, getCLientById, fetchClientsByUserId, getAllClients}
 export default ClientServices

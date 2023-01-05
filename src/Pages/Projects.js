@@ -3,9 +3,12 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {useEffect, useState} from "react";
 import ProjectTab from "../Components/Projects/ProjectTab";
-import {reserialize} from "../helpers/transformations";
+
 import Button from "@mui/material/Button";
 import DialogFormProject from "../Components/Projects/DialogFormProject";
+import DialogInvoice from "../Components/Invoices/DialogInvoice";
+import DialogClientDataModal from "../Components/Clients/ClientDataModal";
+import {getClientByid, setClientInUse} from "../features/Client/ClientSlice";
 
 
 const mapStateToProps = (state) => {
@@ -15,9 +18,19 @@ const mapStateToProps = (state) => {
     }
 }
 const Projects = (props) => {
-    const [projects, setProjects] = useState("")
+    const [projects, setProjects] = useState([])
+    const [openInvoicemodal, setOpenInvoiceModal] = useState(false)
+    const[openClientModal, setOpenClientModal] = useState(false)
+    const dispatch = useDispatch()
     const handleOpenModalForm = () => {
         setAddProject(true)
+    }
+    const handleOpenInvoice = () => {
+        setOpenInvoiceModal(true)
+    }
+    const handleOpenClient = () => {
+        setOpenClientModal(true)
+        dispatch(getClientByid(15));
     }
     const [addProject, setAddProject] = useState(false)
     useEffect(() => {
@@ -39,17 +52,16 @@ const Projects = (props) => {
                     <ProjectTab rows={projects}/>
                 </Paper>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
                 <Paper sx={{p: 10, display: 'flex', flexDirection: 'column'}}>
-
+                    <Button variant="contained" color="primary" onClick={handleOpenInvoice}>Check Invoice</Button>
+                    <DialogInvoice open={openInvoicemodal} setOpen={setOpenInvoiceModal}/>
                 </Paper>
             </Grid>
-            <Grid item xs={4}>
-
-            </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={6}>
                 <Paper sx={{p: 10, display: 'flex', flexDirection: 'column'}}>
-
+                    <Button variant="contained" color="primary" onClick={handleOpenClient}>Check Client</Button>
+                    <DialogClientDataModal open={openClientModal} setOpen={setOpenClientModal}/>
                 </Paper>
             </Grid>
         </Grid>)

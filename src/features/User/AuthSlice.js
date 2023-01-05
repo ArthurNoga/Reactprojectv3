@@ -3,8 +3,7 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
 import AuthService from "../../Services/auth.services";
 import {fetchProjectsByUserId} from "../Projects/ProjectSlice";
-
-const user = JSON.parse(localStorage.getItem("user"));
+import {fetchAllInvoices} from "../Invoice/InvoiceSlice";
 
 
 export const login = createAsyncThunk("auth/login", async ({username, password}, thunkAPI) => {
@@ -15,10 +14,9 @@ export const login = createAsyncThunk("auth/login", async ({username, password},
             data.id
         )
         thunkAPI.dispatch(fetchProjectsByUserId(data.id));
+        thunkAPI.dispatch(fetchAllInvoices(data.id));
         return {user: data};
     } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-        // thunkAPI.dispatch(setMessage(message));
         return thunkAPI.rejectWithValue();
     }
 });
@@ -30,8 +28,6 @@ export const modifyUser = createAsyncThunk("auth/modifyUser", async (user, thunk
         return data
 
     } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-        console.log(error)
         return thunkAPI.rejectWithValue();
     }
 });

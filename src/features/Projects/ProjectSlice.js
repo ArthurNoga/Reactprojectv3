@@ -1,9 +1,11 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import projectService from "../../Services/projects.services";
 import {fetchClient, setClients} from "../Client/ClientSlice";
+import {useSelector} from "react-redux";
+import {fetchAllInvoices} from "../Invoice/InvoiceSlice";
 
-const projects=localStorage.getItem("projects")
-const initialState = projects?{projects}:{
+const projects = localStorage.getItem("projects")
+const initialState = projects ? {projects} : {
     projects: []
 }
 export const fetchProjectsByUserId = createAsyncThunk(
@@ -30,6 +32,10 @@ export const addProject = createAsyncThunk(
     async (project, thunkAPI) => {
         try {
             const response = await projectService.addProject(project);
+
+            const userid = useSelector(state => state.user.user.id)
+            thunkAPI.dispatch(fetchClient(project.dev))
+
             return response;
         } catch (error) {
             const message =
@@ -47,7 +53,7 @@ export const projectSlice = createSlice(
     {
         name: "project",
         initialState,
-        reducers:{},
+        reducers: {},
         extraReducers(builder) {
             builder
                 .addCase(fetchProjectsByUserId.fulfilled, (state, action) => {
@@ -58,8 +64,8 @@ export const projectSlice = createSlice(
                 })
 
 
-    },
+        },
     }
 )
 
-const projectsSelector= state=>state.project
+const projectsSelector = state => state.project

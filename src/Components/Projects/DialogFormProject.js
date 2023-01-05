@@ -10,35 +10,36 @@ import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 
-import clientServices from "../../Services/client.services";
+
 import DataTable from "./TableClientProject";
 import {getAllClients} from "../../features/Client/ClientSlice";
 import {addProject} from "../../features/Projects/ProjectSlice";
 
 const DialogFormProject = (props) => {
-
+    const [clients, setClients] = useState({});
+    const [project, setProject] = useState({});
+    const [clientId, setClientId] = useState(0);
 
     const dispatch = useDispatch();
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
         setProject({...project, client: clientId})
         dispatch(addProject(project));
         props.setOpen(false);
 
     };
 
-    const filteredData = []
+
     const handleFilter = (event) => {
         event.preventDefault();
         const filteredData = clients.filter((client) => client.lastname.toLowerCase().includes(event.target.value.toLowerCase()))
         event.target.value.length > 0 ? setClients(filteredData) : setClients(data)
 
     };
-    const [devId, setDevId] = useState(0);
-    const [clients, setClients] = useState({});
-    const [project, setProject] = useState({});
-    const [clientId, setClientId] = useState();
+
+
     const handleChange = (event) => {
         setProject({
             ...project,
@@ -55,9 +56,8 @@ const DialogFormProject = (props) => {
         dispatch(getAllClients());
         setClients(data);
         setProject({...project, dev: user.id})
-
-    }, [props.open,clientId])
-
+        console.log(clientId)
+    }, [clientId])
 
     return (
         <div>
@@ -125,7 +125,7 @@ const DialogFormProject = (props) => {
                                 onChange={e => {
                                     handleFilter(e)
                                 }}/>
-                            <DataTable rows={clients} idCLient={setClientId}/>
+                            <DataTable rows={data} setIdCLient={setClientId} />
 
                         </Grid>
 

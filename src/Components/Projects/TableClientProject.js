@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import {useEffect} from "react";
+import {DataGrid} from '@mui/x-data-grid';
+import {useEffect, useState} from "react";
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'firstname', headerName: 'First name', width: 130 },
-    { field: 'lastname', headerName: 'Last name', width: 130 },
+    {field: 'id', headerName: 'ID', width: 70},
+    {field: 'firstname', headerName: 'First name', width: 130},
+    {field: 'lastname', headerName: 'Last name', width: 130},
 
     {
         field: 'fullName',
@@ -19,21 +19,22 @@ const columns = [
 ];
 
 
-export const DataTable=( props )=> {
-    const [id, setId] = React.useState(0);
+export const DataTable = (props) => {
 
-    useEffect(() => {
-        props.idCLient(id);
-    }, [id]);
-
+    const[id,setId]=useState(0);
+    useEffect(()=>{
+        props.setIdCLient(id);
+    },[id])
     return (
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{height: 400, width: '100%'}}>
             <DataGrid
                 rows={props.rows}
                 columns={columns}
                 pageSize={10}
                 rowsPerPageOptions={[10]}
-                onRowClick={e=>setId(e.row.id)}
+                onRowClick={e => {
+                   setId(e.row.id)
+                }}
             />
         </div>
     );

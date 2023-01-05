@@ -6,9 +6,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from "@mui/material/Grid";
-import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {modifyPassword, modifyUser} from "../../features/User/AuthSlice";
+import {useState} from "react";
 
 
 const DialogChangePassword = (props) => {
@@ -22,8 +22,6 @@ const DialogChangePassword = (props) => {
     const handleChange = (e) => {
         setDefineUser({...defineUser, password: e.target.value})
         setChngPassword(e.target.value)
-
-
     }
     const handleClose = () => {
         setMatch(false)
@@ -42,12 +40,10 @@ const DialogChangePassword = (props) => {
         chngPassword === value ? setMatch(true) : setMatch(false)
         chngPassword === value ? setColor("success") : setColor("warning")
         setDefineUser({...defineUser, password: value})
-        console.log(defineUser)
     }
 
     return (
         <div>
-
             <Dialog open={props.open} onClose={handleClose}>
                 <DialogTitle> Change password</DialogTitle>
                 <DialogContent>

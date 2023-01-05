@@ -27,6 +27,7 @@ const ProjectTab = (props) => {
         setOpen(false);
     }
 
+
     const getClient = (id) => ClientServices.getCLientById(id)
 
 
@@ -47,33 +48,11 @@ const ProjectTab = (props) => {
         {
             field: 'description',
             headerName: 'Description',
-            width: 160,
+            width:600,
             editable: false,
-            renderCell: (params) => (
-                <a href={`${params.value}`}>{params.value}</a>
-            )
         },
 
-        {
-            field: 'invoiceId',
-            headerName: 'Invoice',
-            type: 'Tel',
-            width: 160,
 
-            renderCell: (params) => (
-                <Button variant="outlined">Invoice</Button>
-            )
-        },
-        {
-            field: 'clientId',
-            headerName: 'Client',
-            type: 'Tel',
-            width: 160,
-
-            renderCell: (params) => (
-                <Button variant="contained" onClick={() => handleClickOpen(params.value)}>Client</Button>
-            )
-        }
     ];
     return (
 

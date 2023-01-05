@@ -9,7 +9,6 @@ const config = {
 
 const fetchProjectsByUserId = (userid) => {
     let project = {id: "",name: "", description: "", technology: "",isOver:""};
-    let clients = [];
     const projects = [];
 
         return axios
@@ -21,7 +20,6 @@ const fetchProjectsByUserId = (userid) => {
                 project.description = i.description;
                 project.technology = i.technology;
                 project.isOver = i.isOver;
-
                 projects.push(project);
 
             });

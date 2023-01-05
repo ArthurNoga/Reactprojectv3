@@ -23,6 +23,7 @@ const DialogChangePassword = (props) => {
         setDefineUser({...defineUser, password: e.target.value})
         setChngPassword(e.target.value)
 
+
     }
     const handleClose = () => {
         setMatch(false)
@@ -31,9 +32,8 @@ const DialogChangePassword = (props) => {
 
     const handleSubmit = () => {
         if (match) {
-            console.log(chngPassword)
             dispatch(modifyPassword(chngPassword))
-            dispatch(modifyUser(user))
+            dispatch(modifyUser(defineUser))
             props.setOpen(false);
         } else return (alert("Passwords do not match"))
     }
@@ -42,10 +42,9 @@ const DialogChangePassword = (props) => {
         chngPassword === value ? setMatch(true) : setMatch(false)
         chngPassword === value ? setColor("success") : setColor("warning")
         setDefineUser({...defineUser, password: value})
+        console.log(defineUser)
     }
-    useEffect(() => {
 
-    }, [chngPassword])
     return (
         <div>
 

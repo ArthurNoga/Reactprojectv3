@@ -29,7 +29,7 @@ export default function DialogChangeProfile(props) {
     const handleClose = () => {
         props.setOpen(false);
     };
-    console.log(user)
+
     return (
         <div>
 

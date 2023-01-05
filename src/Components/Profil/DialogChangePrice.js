@@ -31,8 +31,7 @@ const DialogChangePrice = (props) => {
         dispatch(modifyUser(defineUser))
         props.setOpen(false);
     }
-    useEffect(() => {
-    }, [userStore])
+
 
     return (
         <div>
